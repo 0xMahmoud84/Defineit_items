@@ -1,0 +1,243 @@
+# Defineit - AI-Powered Project Management Dictionary
+## Complete Website Development Specification
+
+### 🎯 Project Overview
+Build a cutting-edge, AI-powered project management dictionary website named "Defineit" that serves as the ultimate resource for PM professionals. The platform combines instant AI definitions, community knowledge sharing, and personalized learning experiences in a futuristic, premium interface.
+
+### 🎨 Visual Design Philosophy
+**Core Aesthetic**: Ultra-modern, AI-themed interface with deep space navy (#0A0B1E) backgrounds, electric blue gradients (#4F46E5 to #06B6D4), and subtle purple accents (#8B5CF6). Implement glassmorphism effects, soft glows, and floating particle animations throughout.
+
+**Typography**: 
+- Primary: Inter font family (clean, tech-forward)
+- Weights: 300 (light), 400 (regular), 500 (medium), 600 (semi-bold), 700 (bold)
+- Hierarchy: Large hero text (3-4rem), section headers (2rem), body text (1rem)
+
+### 🛠️ Technical Stack Requirements
+- **Frontend**: React with TypeScript
+- **Backend**: Supabase (PostgreSQL database, real-time subscriptions, authentication)
+- **Animations**: GSAP with ScrollTrigger for advanced scroll animations
+- **Scrolling**: Locomotive Scroll for smooth parallax effects
+- **3D Elements**: Spline for hero section 3D models
+- **Icons**: Phosphor Icons for consistent iconography
+- **Responsive**: Mobile-first design with fluid breakpoints
+
+### 🎭 Animation System Architecture
+
+#### GSAP Loading Sequence
+```javascript
+// 1. Preloader Animation (3-4 seconds)
+gsap.timeline()
+  .from(".preloader-logo", { opacity: 0, scale: 0.5, duration: 1, ease: "back.out(1.7)" })
+  .to(".progress-bar", { width: "100%", duration: 2.5, ease: "power2.out" })
+  .to(".preloader-text", { opacity: 0, y: -20, duration: 0.5 })
+  .to(".preloader", { opacity: 0, scale: 0.9, duration: 1 })
+  .call(() => document.querySelector(".preloader").remove())
+  .from(".main-content", { opacity: 0, y: 50, duration: 1, ease: "power2.out" });
+```
+
+#### Scroll-Based Animations
+- **Hero Section**: Parallax background, text blur-to-clear, staggered element reveals
+- **Feature Cards**: Horizontal scroll with 3D transforms, glassmorphic hover effects
+- **Definition Cards**: Fade-in with scale and vertical motion (y: 60 → 0)
+- **Floating Elements**: Continuous yoyo animations for orbs and particles
+
+### 📱 Page Structure & Functionality
+
+#### 1. Hero Section / Homepage
+**Layout**: 
+- Navigation: Transparent header with glassmorphic background on scroll
+- Hero Text: "Your AI-Powered Project Management Dictionary"
+- Subtitle: "Stop Googling PM terms. Instantly define, save, and master concepts with Defineit"
+- CTA: Glowing "Get Started" button with pulse animation
+- Background: Spline 3D model integration with floating neon orbs
+
+**Spline Integration**: 
+- Embed code: `<spline-viewer url="YOUR_SPLINE_SCENE_URL"></spline-viewer>`
+- Floating geometric shapes with subtle rotation and movement
+- Responsive scaling for mobile devices
+
+#### 2. AI Definer Tool (Core Feature)
+**Interface Design**:
+- Chat-style layout resembling ChatGPT/Claude
+- Input field with placeholder: "Ask me anything about project management..."
+- AI response bubbles with typing animation
+- Action buttons: 🔊 Audio, 💾 Save, ⭐ Rate, 🔄 Ask Follow-up
+
+**Technical Implementation**:
+- Real-time AI responses via API integration
+- Text-to-speech functionality
+- Save to user's personal dictionary (Supabase)
+- Response rating system for improvement
+
+#### 3. My Dictionary Page
+**Features**:
+- Grid/list toggle view
+- Search and filter functionality (alphabetical, date, category)
+- Each saved term includes:
+  - Term name and definition
+  - Audio playback button
+  - Edit personal notes
+  - Delete option
+  - Rating stars
+  - Date saved
+
+**UI Components**:
+- Glassmorphic cards with hover animations
+- Infinite scroll for large collections
+- Export functionality (PDF, CSV)
+
+#### 4. Community Hub
+**Social Features**:
+- Feed-style layout with user avatars
+- Question/answer format
+- Voting system (upvotes/downvotes)
+- Comment threads
+- User profiles with expertise badges
+- Filter options: "Trending", "Recent", "Most Helpful"
+
+**Gamification Elements**:
+- User reputation scores
+- Achievement badges
+- Contribution streaks
+- Monthly leaderboards
+
+#### 5. PM Companies Directory
+**Structure**:
+- Company logo grid with hover effects
+- Detailed company cards showing:
+  - Company name and logo
+  - Brief description
+  - Industry focus
+  - Website link
+  - User ratings
+- Advanced filtering (industry, size, location, tools used)
+
+#### 6. Personal Dashboard
+**User Analytics**:
+- Welcome message with user name
+- Usage statistics (terms defined, saved, rated)
+- Learning progress visualization
+- Recent activity timeline
+- Recommended terms based on behavior
+- Integration widgets for popular PM tools
+
+#### 7. Authentication System
+**Login/Signup Pages**:
+- Minimalist forms with glassmorphic styling
+- Social login options (Google, LinkedIn, GitHub)
+- Password strength indicators
+- Email verification flow
+- Password reset functionality
+- Error states with helpful messaging
+
+### 🎨 Component Library
+
+#### Glassmorphic Cards
+```css
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+```
+
+#### Neon Glow Effects
+```css
+.neon-glow {
+  box-shadow: 
+    0 0 20px rgba(79, 70, 229, 0.5),
+    0 0 40px rgba(79, 70, 229, 0.3),
+    0 0 60px rgba(79, 70, 229, 0.1);
+}
+```
+
+#### Floating Particles
+- Implement with GSAP for smooth performance
+- Various sizes and opacity levels
+- Continuous movement with random paths
+- Responsive behavior on mobile
+
+### 📊 Data Architecture (Supabase)
+
+#### Database Tables
+```sql
+-- Users table
+users (id, email, name, avatar_url, created_at, subscription_tier)
+
+-- Definitions table
+definitions (id, user_id, term, definition, ai_generated, created_at, rating)
+
+-- Community posts
+community_posts (id, user_id, title, content, votes, created_at)
+
+-- Companies directory
+companies (id, name, logo_url, description, industry, website, created_at)
+
+-- User analytics
+user_analytics (id, user_id, terms_defined, terms_saved, activity_date)
+```
+
+#### Real-time Features
+- Live community feed updates
+- Instant definition saving
+- Real-time typing indicators in community chat
+- Push notifications for responses
+
+### 🎯 Performance Optimization
+- Lazy loading for images and 3D models
+- Code splitting for route-based loading
+- Image optimization with WebP format
+- CDN integration for static assets
+- Service worker for offline functionality
+
+### 📱 Mobile Responsiveness
+- Touch-friendly interface with proper spacing
+- Swipeable card sections
+- Collapsible navigation menu
+- Optimized 3D models for mobile performance
+- Progressive enhancement for advanced features
+
+### 🎨 Color Palette
+```css
+:root {
+  --primary-bg: #0A0B1E;
+  --secondary-bg: #1E1B3C;
+  --accent-blue: #4F46E5;
+  --accent-cyan: #06B6D4;
+  --accent-purple: #8B5CF6;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --border-glass: rgba(255, 255, 255, 0.1);
+}
+```
+
+### 🚀 Advanced Features
+- Dark/Light mode toggle (with preference saving)
+- Keyboard shortcuts for power users
+- Advanced search with AI-powered suggestions
+- Integration with popular PM tools (Jira, Asana, Monday.com)
+- Multi-language support for global users
+- Voice input for hands-free operation
+- PDF export of personal dictionary
+- Team collaboration features for organizations
+
+### 📈 Analytics & Insights
+- User behavior tracking (privacy-compliant)
+- Popular terms and trending topics
+- User engagement metrics
+- A/B testing for UI improvements
+- Performance monitoring and error tracking
+
+### 🎭 Micro-interactions
+- Button hover effects with scale and glow
+- Loading states with skeleton screens
+- Toast notifications for user actions
+- Page transitions with smooth animations
+- Form validation with real-time feedback
+- Drag-and-drop functionality for organizing saved terms
+
+This comprehensive specification ensures Defineit will be a premium, AI-powered platform that revolutionizes how project management professionals learn, share, and apply knowledge in their daily work.
+
